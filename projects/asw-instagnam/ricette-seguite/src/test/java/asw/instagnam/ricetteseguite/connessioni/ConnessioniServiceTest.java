@@ -39,7 +39,7 @@ public class ConnessioniServiceTest {
 
     @Test
     public void testReceiveAndSaveNewConnessioniEvent() {
-        connessioneMessageConsumer.listener(new ConnessioneCreatedEvent(1L, "vito", "francesco"));
+        connessioneMessageConsumer.listenerForConnessione(new ConnessioneCreatedEvent(1L, "vito", "francesco"));
 
         Optional<Connessione> connessioneOpt = connessioneRepository.findById(1L);
         assertThat(connessioneOpt.isPresent()).isTrue();

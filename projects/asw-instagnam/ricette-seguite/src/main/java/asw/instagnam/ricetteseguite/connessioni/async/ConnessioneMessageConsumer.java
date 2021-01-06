@@ -2,6 +2,7 @@ package asw.instagnam.ricetteseguite.connessioni.async;
 
 import asw.instagnam.ricetteseguite.domain.Connessione;
 import asw.instagnam.ricetteseguite.domain.ConnessioniService;
+import asw.instagnam.ricetteseguite.domain.RicetteSeguiteService;
 import asw.instagnam.ricetteseguite.rest.RicetteSeguiteController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,10 +20,20 @@ public class ConnessioneMessageConsumer {
     @Qualifier("connessioniServiceImpl")
     ConnessioniService connessioniServiceImpl;
 
-    @KafkaListener(topics = "${asw.kafka.topic.connessione.in}")
-    public void listener(ConnessioneCreatedEvent connessioneCreatedEvent) {
-        logger.info(String.format("$$$$ => Consumed message: %s", connessioneCreatedEvent));
+    @Autowired
+    RicetteSeguiteService ricetteSeguiteService;
+
+    @KafkaListener(topics = "${asw.kafka.topic.connessione.in}", groupId = "${asw.kafka.group-id.connessione.in}")
+    public void listenerForConnessione(ConnessioneCreatedEvent connessioneCreatedEvent) {
+        logger.info(String.format("$$$$ => listenerForConnessione = Consumed message: %s", connessioneCreatedEvent));
         connessioniServiceImpl.save(new Connessione(connessioneCreatedEvent.getId(), connessioneCreatedEvent.getFollower(), connessioneCreatedEvent.getFollowed()));
     }
+
+    @KafkaListener(topics = "${asw.kafka.topic.connessione.in}",  groupId = "${asw.kafka.group-id.connessione.ricetteseguite.in}")
+    public void listenerForRicetteSeguite(ConnessioneCreatedEvent connessioneCreatedEvent) {
+        logger.info(String.format("$$$$ => listenerForRicetteSeguite = Consumed message: %s", connessioneCreatedEvent));
+        ricetteSeguiteService.saveNewConnessione(connessioneCreatedEvent.getFollower(), connessioneCreatedEvent.getFollowed());
+    }
+
 
 }

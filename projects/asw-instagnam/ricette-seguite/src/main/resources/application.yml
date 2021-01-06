@@ -35,11 +35,7 @@ spring:
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      properties:
-        spring:
-          json:
-            trusted:
-              packages: 'asw.instagnam.connessioni.async'
+      properties.spring.json.trusted.packages: 'asw.instagnam.connessioni.async'
 server: 
   port: ${PORT:${SERVER_PORT:0}}
 #  port: 8080
@@ -48,3 +44,7 @@ spring.jpa.open-in-view: false
 
 asw.kafka.topic.ricetta.in: ricetteTopic
 asw.kafka.topic.connessione.in: connessioneTopic
+asw.kafka.group-id.connessione.ricetteseguite.in: connessioneGroupForRicetteSeguite
+asw.kafka.group-id.connessione.in: connessioneGroupForConnessioni
+asw.kafka.group-id.ricetta.ricetteseguite.in: connessioneGroupForRicetteSeguite
+asw.kafka.group-id.ricetta.in: connessioneGroupForConnessioni
