@@ -4,6 +4,7 @@ import asw.instagnam.ricetteseguite.domain.Connessione;
 import asw.instagnam.ricetteseguite.domain.ConnessioneRepository;
 import asw.instagnam.ricetteseguite.domain.Ricetta;
 import asw.instagnam.ricetteseguite.domain.RicettaRepository;
+import asw.instagnam.ricetteseguite.domain.RicetteSeguite;
 import asw.instagnam.ricetteseguite.domain.RicetteSeguiteRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,18 +34,10 @@ public class RicetteSeguiteControllerTest {
 
     @Test
     public void testGetRicetteSeguite() {
-        connessioneRepository.save(new Connessione(1L, "Olivia", "Ava"));
-        connessioneRepository.save(new Connessione(2L, "Olivia", "Isla"));
-        connessioneRepository.save(new Connessione(3L, "Olivia", "Michael"));
-        connessioneRepository.save(new Connessione(4L, "Isla", "Harry"));
-        connessioneRepository.save(new Connessione(5L, "Ava", "Noah"));
-        connessioneRepository.save(new Connessione(6L, "James", "Noah"));
-        connessioneRepository.save(new Connessione(7L, "Michael", "Richard"));
-
-        ricettaRepository.save(new Ricetta(1L, "Isla", "Insalata di polipo"));
-        ricettaRepository.save(new Ricetta(2L, "Ava", "Polpettine di tonno e ricotta"));
-        ricettaRepository.save(new Ricetta(3L, "Michael", "Salmone croccante"));
-        ricettaRepository.save(new Ricetta(4L, "James", "Orata al forno"));
+        ricetteSeguiteRepository.save(new RicetteSeguite("Olivia", 1L, "Ava", "Polpettine di tonno e ricotta"));
+        ricetteSeguiteRepository.save(new RicetteSeguite("Olivia", 2L, "Isla", "Insalata di polipo"));
+        ricetteSeguiteRepository.save(new RicetteSeguite("Olivia", 3L, "Michael", "Salmone croccante"));
+        ricetteSeguiteRepository.save(new RicetteSeguite("James", 4L, "Michael", "Orata al forno"));
 
         Collection<Ricetta> ricette = ricetteSeguiteController.getRicetteSeguite("Olivia");
         assertThat(ricette).hasSize(3);
