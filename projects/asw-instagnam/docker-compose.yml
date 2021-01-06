@@ -1,0 +1,69 @@
+version: '3'
+services:
+  zookeeper:
+    image: zookeeper:3.4.9
+    hostname: zookeeper
+    container_name: asw-vito-zookeeper
+    ports:
+      - "2182:2181"
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_PORT: 2181
+      ZOO_SERVERS: server.1=zookeeper:2888:3888
+    volumes:
+      - ./data/zookeeper/data:/data
+      - ./data/zookeeper/datalog:/datalog
+
+  kafka1:
+    image: confluentinc/cp-kafka:5.3.0
+    container_name: asw-vito-kafka
+    hostname: kafka1
+    ports:
+      - "9030:9030"
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka1:19091,LISTENER_DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9030
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_BROKER_ID: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    volumes:
+      - ./data/kafka1/data:/var/lib/kafka/data
+    depends_on:
+      - zookeeper
+
+  my-sql-connessioni:
+    image: mysql:8.0
+    container_name: asw-vito-connessioni-mysql
+    hostname: asw-vito-connessioni-mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_USER: "username"
+      MYSQL_PASSWORD: "password"
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_DATABASE: "connessioni"
+
+  my-sql-ricette:
+    image: mysql:8.0
+    container_name: asw-vito-ricette-mysql
+    hostname: asw-vito-ricette-mysql
+    ports:
+      - "3308:3306"
+    environment:
+      MYSQL_USER: "username"
+      MYSQL_PASSWORD: "password"
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_DATABASE: "ricette"
+
+  my-sql-ricette-seguite:
+    image: mysql:8.0
+    container_name: asw-vito-ricette-seguite-mysql
+    hostname: asw-vito-ricette-seguite-mysql
+    ports:
+      - "3309:3306"
+    environment:
+      MYSQL_USER: "username"
+      MYSQL_PASSWORD: "password"
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_DATABASE: "ricette_seguite"

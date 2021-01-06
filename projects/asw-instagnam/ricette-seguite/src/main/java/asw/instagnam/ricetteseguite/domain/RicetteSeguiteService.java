@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class RicetteSeguiteService {
@@ -27,15 +27,14 @@ public class RicetteSeguiteService {
 
     /* Trova le ricette (in formato breve) degli utenti seguiti da utente. */
     public Collection<Ricetta> getRicetteSeguite(String utente) {
-        Collection<Ricetta> ricette = new ArrayList<>();
-        Collection<Connessione> connessioni = connessioniService.getConnessioniByFollower(utente);
-        for (Connessione connessione : connessioni) {
-            String followed = connessione.getFollowed();
-            //TODO -> Possiamo migliorare le performance eseguendo una sola query
-            Collection<Ricetta> ricetteByFollowed = ricetteService.getRicetteByAutore(followed);
-            ricette.addAll(ricetteByFollowed);
-        }
-        return ricette;
+        Collection<RicetteSeguite> ricetteSeguite = ricetteSeguiteRepository.findByRicetteSeguitePK_UtenteFollower(utente);
+        return ricetteSeguite.stream()
+                .map(_ricettaSeguita ->
+                        new Ricetta(
+                                _ricettaSeguita.getRicetteSeguitePK().getIdRicetta(),
+                                _ricettaSeguita.getAutoreRicetta(),
+                                _ricettaSeguita.getTitoloRicetta()))
+                .collect(Collectors.toList());
     }
 
     public RicetteSeguite save(String follower, Long idRicetta, String autoreRicetta, String titoloRicetta) {

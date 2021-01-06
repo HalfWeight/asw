@@ -7,4 +7,7 @@ import java.util.Collection;
 public interface RicetteSeguiteRepository extends JpaRepository<RicetteSeguite, RicetteSeguite.RicetteSeguitePK> {
 
     Collection<RicetteSeguite> findByRicetteSeguitePK_IdRicetta(Long idRicetta);
+
+    Collection<RicetteSeguite> findByRicetteSeguitePK_UtenteFollower(String follower);
+
 }
