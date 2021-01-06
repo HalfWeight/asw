@@ -39,9 +39,9 @@ services:
     ports:
       - "3307:3306"
     environment:
-      MYSQL_USER: "username"
-      MYSQL_PASSWORD: "password"
-      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_USER: "connessioni"
+      MYSQL_PASSWORD: "fjGe8PXTAM8s2s6s"
+      MYSQL_ROOT_PASSWORD: "sKQZr4gJx24Vu82R"
       MYSQL_DATABASE: "connessioni"
 
   my-sql-ricette:
@@ -51,9 +51,9 @@ services:
     ports:
       - "3308:3306"
     environment:
-      MYSQL_USER: "username"
-      MYSQL_PASSWORD: "password"
-      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_USER: "ricette"
+      MYSQL_PASSWORD: "fjGe8PXTAM8s2s6s"
+      MYSQL_ROOT_PASSWORD: "sKQZr4gJx24Vu82R"
       MYSQL_DATABASE: "ricette"
 
   my-sql-ricette-seguite:
@@ -63,7 +63,7 @@ services:
     ports:
       - "3309:3306"
     environment:
-      MYSQL_USER: "username"
-      MYSQL_PASSWORD: "password"
-      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_USER: "ricette_seguite"
+      MYSQL_PASSWORD: "fjGe8PXTAM8s2s6s"
+      MYSQL_ROOT_PASSWORD: "sKQZr4gJx24Vu82R"
       MYSQL_DATABASE: "ricette_seguite"

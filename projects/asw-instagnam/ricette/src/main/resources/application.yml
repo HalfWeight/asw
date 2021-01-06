@@ -21,8 +21,8 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3308/ricette?serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: "username"
-    password: "password"
+    username: "ricette"
+    password: "fjGe8PXTAM8s2s6s"
   jpa:
     hibernate:
       ddl-auto: update
