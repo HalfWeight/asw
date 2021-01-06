@@ -10,7 +10,10 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 
 @Entity
-@Table(indexes = @Index(name = "index_follower", columnList = "follower"))
+@Table(indexes = {
+        @Index(name = "index_follower", columnList = "follower"),
+        @Index(name = "index_followed", columnList = "followed")
+})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

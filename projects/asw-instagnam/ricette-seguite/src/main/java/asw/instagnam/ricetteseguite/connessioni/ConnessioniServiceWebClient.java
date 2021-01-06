@@ -42,6 +42,11 @@ public class ConnessioniServiceWebClient implements ConnessioniService {
 	}
 
 	@Override
+	public Collection<Connessione> getConnessioniByFollowed(String follower) {
+		throw new UnsupportedOperationException("The find by followed operation is not possible via rest");
+	}
+
+	@Override
 	public void save(Connessione connessione) {
 		throw new UnsupportedOperationException("The save operation is not possible via rest");
 	}

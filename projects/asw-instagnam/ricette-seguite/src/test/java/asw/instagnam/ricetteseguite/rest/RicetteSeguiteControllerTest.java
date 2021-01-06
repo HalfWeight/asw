@@ -4,7 +4,6 @@ import asw.instagnam.ricetteseguite.domain.Connessione;
 import asw.instagnam.ricetteseguite.domain.ConnessioneRepository;
 import asw.instagnam.ricetteseguite.domain.Ricetta;
 import asw.instagnam.ricetteseguite.domain.RicettaRepository;
-import asw.instagnam.ricetteseguite.domain.RicetteSeguite;
 import asw.instagnam.ricetteseguite.domain.RicetteSeguiteRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,8 +53,4 @@ public class RicetteSeguiteControllerTest {
                 .containsExactlyInAnyOrder("Insalata di polipo", "Polpettine di tonno e ricotta", "Salmone croccante");
     }
 
-    @Test
-    public void test() {
-        ricetteSeguiteRepository.save(new RicetteSeguite(new RicetteSeguite.RicetteSeguitePK(1L, "follower"), "autore", "titolo"));
-    }
 }

@@ -38,6 +38,11 @@ public class RicetteSeguiteService {
         return ricette;
     }
 
+    public RicetteSeguite save(String follower, Long idRicetta, String autoreRicetta, String titoloRicetta) {
+        RicetteSeguite ricetteSeguite = new RicetteSeguite(follower, idRicetta, autoreRicetta, titoloRicetta);
+        return ricetteSeguiteRepository.save(ricetteSeguite);
+    }
+
     public void updateByRicetta(Long idRicetta, String autore, String titolo) {
         Collection<RicetteSeguite> ricetteSeguite = ricetteSeguiteRepository.findByRicetteSeguitePK_IdRicetta(idRicetta);
         if (CollectionUtils.isEmpty(ricetteSeguite)) {
@@ -51,7 +56,7 @@ public class RicetteSeguiteService {
     }
 
     public void saveNewRicetta(Long idRicetta, String autore, String titolo) {
-        Collection<Connessione> connessioni = connessioniService.getConnessioniByFollower(autore);
+        Collection<Connessione> connessioni = connessioniService.getConnessioniByFollowed(autore);
         if (CollectionUtils.isEmpty(connessioni)) {
             logger.info("No connessioni found by autore " + autore + " skipping creation of new RicetteSeguite");
             return;

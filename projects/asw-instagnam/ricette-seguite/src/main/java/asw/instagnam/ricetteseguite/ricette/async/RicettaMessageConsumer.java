@@ -24,13 +24,13 @@ public class RicettaMessageConsumer {
     RicetteSeguiteService ricetteSeguiteService;
 
     @KafkaListener(topics = "${asw.kafka.topic.ricetta.in}", groupId = "${asw.kafka.group-id.ricetta.in}")
-    public void listener(RicettaCreatedEvent ricettaCreatedEvent) {
+    public void listenerForRicetta(RicettaCreatedEvent ricettaCreatedEvent) {
         logger.info(String.format("$$$$ => Consumed message: %s", ricettaCreatedEvent));
         ricetteServiceImpl.save(new Ricetta(ricettaCreatedEvent.getId(), ricettaCreatedEvent.getAutore(), ricettaCreatedEvent.getTitolo()));
     }
 
     @KafkaListener(topics = "${asw.kafka.topic.ricetta.in}", groupId = "${asw.kafka.group-id.ricetta.ricetteseguite.in}")
-    public void listener2(RicettaCreatedEvent ricettaCreatedEvent) {
+    public void listenerForRicetteSeguite(RicettaCreatedEvent ricettaCreatedEvent) {
         logger.info(String.format("$$$$ => Consumed message: %s", ricettaCreatedEvent));
         ricetteSeguiteService.updateByRicetta(ricettaCreatedEvent.getId(), ricettaCreatedEvent.getAutore(), ricettaCreatedEvent.getTitolo());
         ricetteSeguiteService.saveNewRicetta(ricettaCreatedEvent.getId(), ricettaCreatedEvent.getAutore(), ricettaCreatedEvent.getTitolo());

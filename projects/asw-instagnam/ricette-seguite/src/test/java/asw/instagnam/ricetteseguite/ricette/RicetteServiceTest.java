@@ -39,7 +39,7 @@ public class RicetteServiceTest {
 
     @Test
     public void testReceiveAndSaveNewRicettaEvent() {
-        ricettaMessageConsumer.listener(new RicettaCreatedEvent(1L, "Elizabeth", "Paccheri ripieni"));
+        ricettaMessageConsumer.listenerForRicetta(new RicettaCreatedEvent(1L, "Elizabeth", "Paccheri ripieni"));
 
         Optional<Ricetta> ricetteOpt = ricettaRepository.findById(1L);
         assertThat(ricetteOpt.isPresent()).isTrue();

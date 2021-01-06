@@ -20,6 +20,11 @@ public class ConnessioniServiceImpl implements ConnessioniService {
     }
 
     @Override
+    public Collection<Connessione> getConnessioniByFollowed(String follower) {
+        return connessioneRepository.findByFollowed(follower);
+    }
+
+    @Override
     public void save(Connessione connessione) {
         connessioneRepository.save(connessione);
     }
