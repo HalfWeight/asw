@@ -1,8 +1,18 @@
 version: '3'
 services:
-  zookeeper:
+
+  asw-vito-consul:
+    image: consul
+    hostname: asw-vito-consul
+    container_name: asw-vito-consul
+    ports:
+      - 8500:8500
+    networks:
+      - common-network
+
+  asw-vito-zookeeper:
     image: zookeeper:3.4.9
-    hostname: zookeeper
+    hostname: asw-vito-zookeeper
     container_name: asw-vito-zookeeper
     ports:
       - "2182:2181"
@@ -13,26 +23,30 @@ services:
     volumes:
       - ./data/zookeeper/data:/data
       - ./data/zookeeper/datalog:/datalog
+    networks:
+      - common-network
 
-  kafka1:
+  asw-vito-kafka:
     image: confluentinc/cp-kafka:5.3.0
     container_name: asw-vito-kafka
-    hostname: kafka1
+    hostname: asw-vito-kafka
     ports:
       - "9030:9030"
     environment:
-      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka1:19091,LISTENER_DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9030
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://asw-vito-kafka:19091,LISTENER_DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9030
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
-      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      KAFKA_ZOOKEEPER_CONNECT: "asw-vito-zookeeper:2181"
       KAFKA_BROKER_ID: 1
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     volumes:
       - ./data/kafka1/data:/var/lib/kafka/data
     depends_on:
-      - zookeeper
+      - asw-vito-zookeeper
+    networks:
+      - common-network
 
-  my-sql-connessioni:
+  asw-vito-connessioni-mysql:
     image: mysql:8.0
     container_name: asw-vito-connessioni-mysql
     hostname: asw-vito-connessioni-mysql
@@ -43,8 +57,10 @@ services:
       MYSQL_PASSWORD: "fjGe8PXTAM8s2s6s"
       MYSQL_ROOT_PASSWORD: "sKQZr4gJx24Vu82R"
       MYSQL_DATABASE: "connessioni"
+    networks:
+      - common-network
 
-  my-sql-ricette:
+  asw-vito-ricette-mysql:
     image: mysql:8.0
     container_name: asw-vito-ricette-mysql
     hostname: asw-vito-ricette-mysql
@@ -55,8 +71,10 @@ services:
       MYSQL_PASSWORD: "fjGe8PXTAM8s2s6s"
       MYSQL_ROOT_PASSWORD: "sKQZr4gJx24Vu82R"
       MYSQL_DATABASE: "ricette"
+    networks:
+      - common-network
 
-  my-sql-ricette-seguite:
+  asw-vito-ricette-seguite-mysql:
     image: mysql:8.0
     container_name: asw-vito-ricette-seguite-mysql
     hostname: asw-vito-ricette-seguite-mysql
@@ -67,3 +85,9 @@ services:
       MYSQL_PASSWORD: "fjGe8PXTAM8s2s6s"
       MYSQL_ROOT_PASSWORD: "sKQZr4gJx24Vu82R"
       MYSQL_DATABASE: "ricette_seguite"
+    networks:
+      - common-network
+
+networks:
+  common-network:
+    driver: bridge
