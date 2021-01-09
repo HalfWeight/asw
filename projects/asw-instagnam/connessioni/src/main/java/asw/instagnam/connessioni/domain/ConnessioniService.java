@@ -19,6 +19,9 @@ public class ConnessioniService {
 	MessagePublisher<Connessione> connessioneMessagePublisher;
 
  	public Connessione createConnessione(String follower, String followed) {
+		//TODO -> salviamo la connessione e poi pubblichiamo l'evento.
+		// Se l'invio dell'evento non va a buon fine, ci possiamo permettere di perdere un evento?
+		// Dobbiamo lanciare un eccezione e fare rollback?
 		Connessione connessione = new Connessione(follower, followed); 
 		connessione = connessioniRepository.save(connessione);
 		connessioneMessagePublisher.sendMessage(connessione);

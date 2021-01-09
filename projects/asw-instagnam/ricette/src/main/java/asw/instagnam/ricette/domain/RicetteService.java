@@ -16,6 +16,9 @@ public class RicetteService {
     private MessagePublisher<RicettaCompleta> ricettaMessagePublisher;
 
     public RicettaCompleta createRicetta(String autore, String titolo, String preparazione) {
+        //TODO -> salviamo la ricetta e poi pubblichiamo l'evento.
+        // Se l'invio dell'evento non va a buon fine, ci possiamo permettere di perdere un evento?
+        // Dobbiamo lanciare un eccezione e fare rollback?
         RicettaCompleta ricetta = new RicettaCompleta(autore, titolo, preparazione);
         ricetta = ricetteRepository.save(ricetta);
         ricettaMessagePublisher.sendMessage(ricetta);
