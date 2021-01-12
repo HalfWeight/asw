@@ -5,7 +5,7 @@ spring:
     name: ricette
   cloud:
     consul:
-      host: localhost
+      host: asw-vito-consul
       port: 8500
       discovery: 
         instanceId: ${spring.application.name}-${spring.cloud.client.hostname}-${random.value}
@@ -19,7 +19,7 @@ spring:
     loadbalancer: 
       ribbon.enabled: false 
   datasource:
-    url: jdbc:mysql://localhost:3308/ricette?serverTimezone=UTC
+    url: jdbc:mysql://asw-vito-ricette-mysql:3306/ricette?serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: "ricette"
     password: "fjGe8PXTAM8s2s6s"
@@ -31,7 +31,7 @@ spring:
   kafka:
     # Questo progetto produce soltanto, e non consuma messaggi
     producer:
-      bootstrap-servers: localhost:9030
+      bootstrap-servers: asw-vito-kafka-1:19091
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 server: 
