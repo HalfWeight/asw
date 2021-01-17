@@ -6,8 +6,8 @@ echo Running INSTAGNAM
 
 # Consul deve essere avviato separatamente 
 
-java -Xms64m -Xmx128m -jar ricette/build/libs/ricette.jar &
-java -Xms64m -Xmx128m -jar connessioni/build/libs/connessioni.jar &
-java -Xms64m -Xmx128m -jar ricette-seguite/build/libs/ricette-seguite.jar &
-
-java -Xms64m -Xmx128m -jar api-gateway/build/libs/api-gateway.jar &
+for projectName in  "connessioni" "ricette" "ricette-seguite" "api-gateway"; do
+  cd $projectName
+  ./build_docker_image.sh
+  cd ..
+done

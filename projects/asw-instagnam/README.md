@@ -49,14 +49,16 @@ per trovare le ricette seguite dall'utente U, è basata su invocazioni remote RE
 
 Per eseguire questo progetto: 
 
-* avviare *Consul* eseguendo lo script `start-consul.sh` 
+* Avviare l'infrastruttura (middleware, broker, database) usando il comando `docker-compose up` (file docker-compose.yml)
 
 * per avviare l'applicazione *Instagnam*, eseguire lo script `run-instagnam.sh` 
 
-Alla fine, l'applicazione può essere arrestata usando lo script `stop-java-processes.sh` (**da usare con cautela!**). 
+Alla fine, l'applicazione può essere arrestata usando lo script `stop-instagnam.sh` (**da usare con cautela!**). 
 
-Inoltre, *Consul* può essere arrestato con lo script `stop-consul.sh`. 
+Inoltre, *l'infrastruttura* può essere arrestata con lo script `docker-compose down`. 
 
+## CI 
+ 
 
 ## Descrizione delle attività da svolgere 
 
