@@ -58,7 +58,7 @@ Alla fine, l'applicazione può essere arrestata usando lo script `stop-instagnam
 Inoltre, *l'infrastruttura* può essere arrestata con lo script `docker-compose down`. 
 
 ## CI 
- 
+Test automatici: https://app.circleci.com/pipelines/github/HalfWeight/asw
 
 ## Descrizione delle attività da svolgere 
 
